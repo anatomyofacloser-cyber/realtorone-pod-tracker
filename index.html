@@ -1,0 +1,199 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>RealtorOne · Daily Check-in</title><meta name="theme-color" content="#000000"><meta name="robots" content="noindex">
+<style>
+@font-face{font-family:I;src:url(fonts/Inter.ttf);font-weight:100 900;font-display:swap}
+*{margin:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{min-height:100%}
+body{font-family:I,system-ui,sans-serif;background:#000;color:#fff;-webkit-font-smoothing:antialiased}
+.wrap{max-width:440px;margin:0 auto;padding-bottom:120px}
+.brand{display:flex;justify-content:space-between;align-items:center;padding:16px 18px 0;font-size:11px;font-weight:800;letter-spacing:3px;color:#F5C242}.brand em{font-style:normal;color:#9aa0a6;letter-spacing:1.5px}
+.top{padding:12px 18px 4px}.ey{color:#F5C242;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase}
+.h{font-size:23px;font-weight:800;margin:4px 0 3px;line-height:1.2}.sub{color:#9aa0a6;font-size:13px;line-height:1.45}
+.bar{height:6px;background:#2a2a2c;border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#F8D56B,#C98A12);transition:width .5s}
+.dates{display:flex;gap:6px;overflow-x:auto;padding:10px 14px 4px;scrollbar-width:none}.dates::-webkit-scrollbar{display:none}
+.dates button{flex:none;border:0;background:#1c1c1e;color:#bbb;border-radius:12px;padding:8px 11px;font:600 12px I;cursor:pointer;text-align:center;min-width:54px}
+.dates button b{display:block;font-size:16px;color:#fff;margin-top:2px}.dates button.s{background:linear-gradient(135deg,#F8D56B,#C98A12);color:#111}.dates button.s b{color:#111}
+.dates button.dn::after{content:'✓';display:block;font-size:10px;color:#4cd07d;margin-top:1px}.dates button.s.dn::after{color:#111}
+.sec{margin:14px 18px 6px;font-size:11px;font-weight:800;letter-spacing:1.4px;color:#F5C242;text-transform:uppercase;display:flex;justify-content:space-between}.sec span{color:#9aa0a6;letter-spacing:.3px;text-transform:none;font-weight:600}
+.q{margin:8px 14px;background:#1c1c1e;border-radius:14px;padding:12px 13px;border:1px solid #2a2a2c;transition:border-color .25s}
+.q.ok{border-color:rgba(76,208,125,.55)}
+.row{display:flex;align-items:center;gap:10px}.ic{width:34px;height:34px;border-radius:10px;background:#2a2a2c;display:grid;place-items:center;font-size:17px;flex:none}
+.q.ok .ic{background:rgba(76,208,125,.16)}
+.tx{flex:1;min-width:0}.tl{font-size:14.5px;font-weight:700}.ts{font-size:11.5px;color:#9aa0a6;margin-top:1px}
+.yn{display:flex;background:#2a2a2c;border-radius:10px;padding:3px;flex:none}.yn button{border:0;background:none;color:#aaa;font:700 13px I;padding:7px 12px;border-radius:8px;cursor:pointer}
+.yn button.y.s{background:#4cd07d;color:#06210f}.yn button.n.s{background:#3a3a3c;color:#fff}
+.st{display:flex;align-items:center;background:#2a2a2c;border-radius:10px;flex:none}.st button{border:0;background:none;color:#F5C242;font:800 20px I;width:36px;height:38px;cursor:pointer}
+.st input{width:46px;background:none;border:0;color:#fff;font:800 17px I;text-align:center;outline:none;-moz-appearance:textfield}.st input::-webkit-inner-spin-button{display:none}
+.mini{height:4px;background:#2a2a2c;border-radius:4px;margin-top:9px;overflow:hidden}.mini i{display:block;height:100%;background:linear-gradient(90deg,#F8D56B,#C98A12);border-radius:4px;transition:width .3s}.q.ok .mini i{background:#4cd07d}
+.ex{margin-top:10px;display:none}.ex.on{display:block}
+.chips{display:flex;gap:6px;flex-wrap:wrap}.chips button{border:0;background:#2a2a2c;color:#ccc;font:700 12.5px I;padding:8px 12px;border-radius:18px;cursor:pointer}.chips button.s{background:rgba(245,194,66,.16);color:#F5C242;box-shadow:inset 0 0 0 1px #F5C242}
+input.in,textarea.in{width:100%;background:#242426;border:0;outline:1px solid #333;border-radius:10px;padding:11px 12px;font:14.5px I;color:#fff;resize:none}input.in:focus,textarea.in:focus{outline-color:#F5C242}
+.lb{display:block;font-size:12.5px;font-weight:600;color:#ddd;margin:2px 0 6px}.lb em{color:#9aa0a6;font-weight:500;font-style:normal}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 14px}
+.cell{background:#1c1c1e;border:1px solid #2a2a2c;border-radius:12px;padding:10px}.cell .lb{font-size:11.5px;margin-bottom:7px;min-height:28px}.cell .st{width:100%;justify-content:space-between}
+.cell.full{grid-column:1/-1}
+.score{display:flex;align-items:center;gap:10px;margin:10px 14px 2px;padding:10px 13px;border-radius:12px;background:rgba(245,194,66,.08);border:1px solid rgba(245,194,66,.3);font-size:13px;color:#ddd}.score b{color:#F5C242;font-size:18px}
+.sat{border-color:rgba(245,194,66,.55);background:linear-gradient(180deg,rgba(245,194,66,.08),#1c1c1e)}
+.foot{position:fixed;left:0;right:0;bottom:0;padding:12px 14px calc(14px + env(safe-area-inset-bottom));background:linear-gradient(0deg,#000 70%,rgba(0,0,0,0));z-index:3}
+.btn{display:block;max-width:412px;margin:0 auto;text-align:center;padding:15px;border-radius:14px;background:linear-gradient(135deg,#F8D56B,#C98A12);color:#111;font:800 15.5px I;border:0;width:100%;cursor:pointer;text-decoration:none}
+.btn:disabled{opacity:.4;cursor:default}.btn.dk{background:#1c1c1e;color:#F5C242;box-shadow:inset 0 0 0 1px #F5C242;margin-top:10px}
+.note{font-size:11.5px;color:#8a8f95;text-align:center;margin:14px 22px;line-height:1.5}
+.banner{margin:10px 14px;padding:10px 12px;border-radius:12px;font-size:12.5px;line-height:1.45;background:#2a1d0a;color:#F5C242;border:1px solid #5a4214}
+.hide{display:none!important}
+.pg{display:none;animation:fi .35s ease}.pg.on{display:block}@keyframes fi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.c{text-align:center;padding:30px 22px 6px}.big{font-size:56px;line-height:1}.c .h{font-size:25px;margin-top:12px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 14px}.sbox{background:#1c1c1e;border:1px solid #2a2a2c;border-radius:14px;padding:12px}.sbox b{display:block;font-size:24px;color:#F5C242;margin-top:3px}.sbox span{font-size:11px;color:#9aa0a6;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+.pbox{margin:8px 14px;background:#1c1c1e;border:1px solid #2a2a2c;border-radius:14px;padding:13px}.pbox .pl{display:flex;justify-content:space-between;font-size:12.5px;color:#ccc;margin-bottom:8px}.pbox .pl b{color:#fff}
+.quote{margin:14px 18px;padding:12px 14px;border-left:3px solid #F5C242;background:#141416;border-radius:0 12px 12px 0;font-size:14px;line-height:1.5;color:#eee}
+</style></head><body><div class="wrap">
+<div class="brand"><span>REALTORONE</span><em id="tag">90-DAY POD</em></div>
+<div id="demoB" class="banner hide">DEMO MODE · sample page. Nothing you enter here is saved.</div>
+<div id="errB" class="banner hide"></div>
+
+<section class="pg on" id="p1">
+<div class="top"><div class="ey" id="ey">Daily check-in · 1 minute</div><div class="h" id="hi">Good day 👋</div><div class="sub" id="lead">Tick off today's 5. Your Pod Manager reviews it every morning.</div>
+<div style="display:flex;justify-content:space-between;font-size:11.5px;color:#9aa0a6;margin:12px 0 6px"><span id="dayLbl">Day – of 90</span><span>Goal: AED 50,000 commission</span></div><div class="bar"><i id="dayBar" style="width:0"></i></div></div>
+<div class="dates" id="dates"></div>
+
+<div class="sec">Your daily 5 <span id="cnt">0/5 done</span></div>
+<div class="q" id="q-learn"><div class="row"><div class="ic">📚</div><div class="tx"><div class="tl">Learn</div><div class="ts">15 mins RealtorOne training</div></div>
+  <div class="yn" data-k="learn"><button type="button" class="y">Yes</button><button type="button" class="n">No</button></div></div>
+  <div class="ex" id="learnEx"><div class="lb">How many minutes?</div><div class="chips" id="mins"></div></div></div>
+<div class="q" id="q-calls"><div class="row"><div class="ic">📞</div><div class="tx"><div class="tl">Calls made</div><div class="ts">Target 20 · investors &amp; end-users</div></div>
+  <div class="st" data-k="calls"><button type="button">−</button><input inputmode="numeric" type="number" min="0" value="0"><button type="button">+</button></div></div><div class="mini"><i></i></div></div>
+<div class="q" id="q-followups"><div class="row"><div class="ic">💬</div><div class="tx"><div class="tl">Follow-ups done</div><div class="ts">Target 10 · incl. Instagram DMs &amp; comments</div></div>
+  <div class="st" data-k="followups"><button type="button">−</button><input inputmode="numeric" type="number" min="0" value="0"><button type="button">+</button></div></div><div class="mini"><i></i></div></div>
+<div class="q" id="q-post"><div class="row"><div class="ic">🎬</div><div class="tx"><div class="tl">Reel / post published</div><div class="ts">Azizi or Dubai Maritime City</div></div>
+  <div class="yn" data-k="post"><button type="button" class="y">Yes</button><button type="button" class="n">No</button></div></div>
+  <div class="ex" id="postEx"><input class="in" id="post_link" type="url" placeholder="Paste the link (optional)"></div></div>
+<div class="q" id="q-crm"><div class="row"><div class="ic">🗂️</div><div class="tx"><div class="tl">CRM updated</div><div class="ts">Every lead has a next action</div></div>
+  <div class="yn" data-k="crm"><button type="button" class="y">Yes</button><button type="button" class="n">No</button></div></div></div>
+<div class="score" id="scoreBox"><b id="scoreN">0/5</b><span id="scoreMsg">Let's get today's 5 done.</span></div>
+
+<div class="sec">Results today <span>optional</span></div>
+<div class="grid2" id="outs"></div>
+
+<div class="sec">Reflect <span>optional · 1 line each</span></div>
+<div class="q"><label class="lb" for="win">🏆 Today's win</label><input class="in" id="win" maxlength="200" placeholder="e.g. Booked a sales-centre visit for Saturday"></div>
+<div class="q"><label class="lb" for="challenge">🧱 Today's challenge</label><input class="in" id="challenge" maxlength="200" placeholder="What slowed you down?"></div>
+<div class="q"><label class="lb" for="support">🤝 Support you need from your Pod Manager</label><input class="in" id="support" maxlength="200" placeholder="e.g. Help with an investor objection"></div>
+
+<div id="satBox" class="hide">
+<div class="sec">Weekly reflection <span>Saturday</span></div>
+<div class="q sat"><label class="lb" for="week_challenge">Biggest challenge you faced this week</label><textarea class="in" id="week_challenge" rows="2" maxlength="300"></textarea>
+<label class="lb" for="week_support" style="margin-top:10px">Support you need from me next week</label><textarea class="in" id="week_support" rows="2" maxlength="300"></textarea></div>
+</div>
+<div class="note">AED 50,000 in 90 days is your programme goal, not a promise. Results depend on your daily execution and the opportunities you create.</div>
+</section>
+
+<section class="pg" id="p2">
+<div class="c"><div class="big" id="cEmoji">🔥</div><div class="h" id="cTitle">Locked in!</div><div class="sub" id="cSub"></div></div>
+<div class="stats"><div class="sbox"><span>Check-in streak</span><b id="sStreak">–</b></div><div class="sbox"><span>Today's score</span><b id="sScore">–</b></div></div>
+<div class="pbox"><div class="pl"><span>This week's calls</span><b id="wCalls">–</b></div><div class="bar"><i id="wCallsBar" style="width:0"></i></div></div>
+<div class="pbox"><div class="pl"><span>This week's follow-ups</span><b id="wFu">–</b></div><div class="bar"><i id="wFuBar" style="width:0"></i></div></div>
+<div class="pbox"><div class="pl"><span>Commission towards your goal</span><b id="comm">–</b></div><div class="bar"><i id="commBar" style="width:0"></i></div><div class="ts" style="margin-top:8px" id="dayNote"></div></div>
+<div class="quote" id="cQuote"></div>
+<div style="padding:0 14px"><button class="btn dk" id="edit" type="button">Edit this check-in</button></div>
+<div class="note">See you tomorrow. Small daily actions, done consistently, build big results.</div>
+</section>
+</div>
+<div class="foot" id="foot"><button class="btn" id="go" type="button" disabled>Submit check-in</button></div>
+<script src="core.js"></script>
+<script>
+const C=TrackerCore,$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const qs=new URLSearchParams(location.search),RID=(qs.get('r')||'').toLowerCase().trim(),DEMO=RID==='demo'||qs.get('demo')==='1',TEST=qs.get('test')==='1';
+let CFG={},PROF=null,TODAY,DATE,S={learn:null,learn_min:15,post:null,crm:null,calls:0,followups:0};
+const OUTS=[['leads','New leads'],['ig_leads','Instagram leads'],['meetings','Meetings booked'],['visits','Site / sales-centre visits'],['eois','EOIs / bookings'],['deals','Deals closed']];
+function todayIn(tz){try{return new Intl.DateTimeFormat('en-CA',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}catch(e){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}}
+function err(m){$('#errB').innerHTML=m;$('#errB').classList.remove('hide')}
+function key(d){return 'r1pt_'+RID+'_'+d}
+function greet(){const h=new Date().getHours();return h<12?'Good morning':h<17?'Good afternoon':'Good evening'}
+
+// build outcome steppers
+$('#outs').innerHTML=OUTS.map(([k,l])=>`<div class="cell"><div class="lb">${l}</div><div class="st" data-k="${k}"><button type="button">−</button><input inputmode="numeric" type="number" min="0" value="0"><button type="button">+</button></div></div>`).join('')+
+ `<div class="cell full"><div class="lb" style="min-height:0">💰 Commission earned today (AED)</div><input class="in" id="commission" inputmode="decimal" type="number" min="0" placeholder="0"></div>`;
+$('#mins').innerHTML=[15,20,30,45,60].map(m=>`<button type="button" data-m="${m}">${m} min</button>`).join('');
+$$('#mins button').forEach(b=>b.onclick=()=>{S.learn_min=+b.dataset.m;paint()});
+$$('.yn').forEach(g=>{const k=g.dataset.k;g.querySelector('.y').onclick=()=>{S[k]=true;paint()};g.querySelector('.n').onclick=()=>{S[k]=false;paint()}});
+$$('.st').forEach(g=>{const i=g.querySelector('input'),[m,p]=g.querySelectorAll('button');const set=v=>{i.value=Math.max(0,Math.min(999,v|0));paint()};
+  m.onclick=()=>set(+i.value-1);p.onclick=()=>set(+i.value+1);i.oninput=()=>paint();i.onfocus=()=>i.select()});
+function val(k){const g=document.querySelector(`.st[data-k="${k}"] input`);return g?Math.max(0,+g.value||0):0}
+function setVal(k,v){const g=document.querySelector(`.st[data-k="${k}"] input`);if(g)g.value=v||0}
+function entry(){const e={date:DATE,learn:!!S.learn,learn_min:S.learn?S.learn_min:0,calls:val('calls'),followups:val('followups'),post:!!S.post,post_link:$('#post_link').value.trim(),crm:!!S.crm,
+  commission:Math.max(0,+$('#commission').value||0),win:$('#win').value.trim(),challenge:$('#challenge').value.trim(),support:$('#support').value.trim()};
+  OUTS.forEach(([k])=>e[k]=val(k));if(C.dow(DATE)===6){e.week_challenge=$('#week_challenge').value.trim();e.week_support=$('#week_support').value.trim()}return e}
+function paint(){
+  $$('.yn').forEach(g=>{const v=S[g.dataset.k];g.querySelector('.y').classList.toggle('s',v===true);g.querySelector('.n').classList.toggle('s',v===false)});
+  $('#learnEx').classList.toggle('on',S.learn===true);$('#postEx').classList.toggle('on',S.post===true);
+  $$('#mins button').forEach(b=>b.classList.toggle('s',+b.dataset.m===S.learn_min));
+  const e=entry(),d=C.done(e),n=C.score(e);
+  ['learn','calls','followups','post','crm'].forEach(k=>$('#q-'+k).classList.toggle('ok',d[k]));
+  $('#q-calls .mini i').style.width=Math.min(100,e.calls/20*100)+'%';$('#q-followups .mini i').style.width=Math.min(100,e.followups/10*100)+'%';
+  $('#cnt').textContent=n+'/5 done';$('#scoreN').textContent=n+'/5';
+  $('#scoreMsg').textContent=n===5?'Full routine. That\'s a winning day! 🔥':n>=3?'Nearly there. Can you close the gap today?':'Every call counts. Log what you did, honestly.';
+  const answered=S.learn!==null&&S.post!==null&&S.crm!==null;$('#go').disabled=!answered||!PROF;
+  $('#go').textContent=answered?'Submit check-in · '+n+'/5':'Answer Learn, Reel and CRM to submit';
+}
+function load(d){
+  DATE=d;$$('#dates button').forEach(b=>b.classList.toggle('s',b.dataset.d===d));
+  const sat=C.dow(d)===6;$('#satBox').classList.toggle('hide',!sat);
+  let e=null;try{e=JSON.parse(localStorage.getItem(key(d))||'null')}catch(x){}
+  S={learn:e?e.learn:null,learn_min:e&&e.learn_min?e.learn_min:15,post:e?e.post:null,crm:e?e.crm:null};
+  ['calls','followups'].concat(OUTS.map(o=>o[0])).forEach(k=>setVal(k,e?e[k]:0));
+  ['post_link','win','challenge','support','week_challenge','week_support'].forEach(k=>$('#'+k).value=e&&e[k]||'');
+  $('#commission').value=e&&e.commission?e.commission:'';
+  $('#ey').textContent=(d===TODAY?'Today':C.dayName(d))+' · '+C.nice(d)+(sat?' · weekly report day':'');
+  paint();
+}
+function dates(){
+  let list=[],x=C.lastWorkdayOnOrBefore(TODAY);
+  for(let i=0;i<6;i++){list.push(x);x=C.prevWorkday(x)}
+  if(PROF){const f=list.filter(d=>d>=PROF.start);list=f.length?f:[list[0]]}
+  list.reverse();
+  $('#dates').innerHTML=list.map(d=>{const dt=C.nice(d).split(' ');return `<button type="button" data-d="${d}" class="${localStorage.getItem(key(d))?'dn':''}">${d===TODAY?'Today':dt[0]}<b>${dt[1]}</b></button>`}).join('');
+  $$('#dates button').forEach(b=>b.onclick=()=>load(b.dataset.d));
+  load(list[list.length-1]);
+}
+async function boot(){
+  try{CFG=await (await fetch('config.json',{cache:'no-store'})).json()}catch(e){}
+  TODAY=todayIn(CFG.timezone||'Asia/Dubai');
+  if(DEMO){$('#demoB').classList.remove('hide');PROF={id:'demo',first:'Chizua',start:C.addDays(TODAY,-9),days:90,goal:50000}}
+  else if(!RID){err('This link is missing your name. Please use the personal link your Pod Manager sent you.')}
+  else{try{const r=await (await fetch(CFG.endpoint+'?action=t_profile&r='+encodeURIComponent(RID))).json();
+      if(r.ok&&r.realtor){PROF=r.realtor;if(r.today)TODAY=r.today}
+      else if(r.error==='unknown_realtor')err('We couldn\'t find this link. Please check with your Pod Manager.');
+      else err('The tracker is being set up. Please try again a little later, or send your numbers to your Pod Manager on WhatsApp today.');
+    }catch(e){err('Can\'t reach the tracker right now. Check your connection and refresh.')}}
+  if(TEST&&PROF)$('#tag').textContent='TEST ENTRY';
+  if(PROF){$('#hi').textContent=greet()+', '+PROF.first+' 👋';const dn=Math.max(1,Math.min(PROF.days,C.diffDays(PROF.start,TODAY)+1));
+    $('#dayLbl').textContent=TODAY<PROF.start?'Starts '+C.nice(PROF.start):'Day '+dn+' of '+PROF.days;$('#dayBar').style.width=(TODAY<PROF.start?0:dn/PROF.days*100)+'%'}
+  dates();
+  if(C.dow(TODAY)===0)$('#lead').textContent='Sunday is your rest day. Missed a day? Pick it above and log it.';
+}
+const QUOTES=['Consistency beats intensity. Show up again tomorrow.','You don\'t need a perfect day, just a counted one.','The calls you make today are the deals you close next month.','Small daily wins add up to big results.','Discipline is choosing what you want most over what you want now.'];
+$('#go').onclick=async()=>{
+  const e=entry();$('#go').disabled=true;$('#go').textContent='Saving…';
+  let sum=null;
+  if(DEMO){sum={score:C.score(e),checkinStreak:4,fullStreak:2,dayNum:10,days:90,week:{calls:e.calls+64,followups:e.followups+31},commission:+e.commission||0,goal:50000}}
+  else{const body=JSON.stringify(Object.assign({type:'tracker',r:RID,test:TEST,submission_id:(crypto.randomUUID?crypto.randomUUID():String(Date.now())),user_agent:navigator.userAgent.slice(0,180)},e));
+    try{const r=await (await fetch(CFG.endpoint,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body})).json();
+      if(!r.ok){$('#go').disabled=false;paint();return alert(r.error==='date_out_of_range'?'That date is too far back to log.':'Could not save: '+(r.error||'unknown error')+'. Please try again.')}sum=r.summary}
+    catch(x){try{await fetch(CFG.endpoint,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body});sum={score:C.score(e)}}catch(y){$('#go').disabled=false;paint();return alert('No connection. Your answers are still here, so try again in a moment.')}}}
+  localStorage.setItem(key(DATE),JSON.stringify(e));
+  done(e,sum);
+};
+function done(e,s){
+  const n=s.score!=null?s.score:C.score(e);
+  $('#cEmoji').textContent=n===5?'🔥':n>=3?'💪':'🌱';
+  $('#cTitle').textContent=(n===5?'Full routine, ':n>=3?'Solid work, ':'Logged, ')+PROF.first+'!';
+  $('#cSub').textContent=n===5?'All 5 done for '+C.nice(e.date)+'. This is exactly how the goal gets built.':n>=3?n+' of 5 done for '+C.nice(e.date)+'. Close the gap tomorrow and make it 5/5.':'Honest tracking is the first win. Tomorrow, start with your 20 calls.';
+  $('#sScore').textContent=n+'/5';$('#sStreak').textContent=s.checkinStreak!=null?s.checkinStreak+' day'+(s.checkinStreak===1?'':'s')+' 🔥':'✓';
+  if(s.week){$('#wCalls').textContent=s.week.calls+' / 120';$('#wCallsBar').style.width=Math.min(100,s.week.calls/120*100)+'%';$('#wFu').textContent=s.week.followups+' / 60';$('#wFuBar').style.width=Math.min(100,s.week.followups/60*100)+'%'}
+  else $$('.pbox').forEach(b=>b.classList.add('hide'));
+  if(s.week){const g=s.goal||50000;$('#comm').textContent='AED '+C.fmt(s.commission)+' / '+C.fmt(g);$('#commBar').style.width=Math.min(100,s.commission/g*100)+'%';$('#dayNote').textContent='Day '+s.dayNum+' of '+s.days+' · goal, not a guarantee';}
+  $('#cQuote').textContent='“'+QUOTES[new Date().getDate()%QUOTES.length]+'”';
+  $('#p1').classList.remove('on');$('#p2').classList.add('on');$('#foot').classList.add('hide');scrollTo(0,0);
+  const b=document.querySelector(`#dates button[data-d="${e.date}"]`);if(b)b.classList.add('dn');
+}
+$('#edit').onclick=()=>{$('#p2').classList.remove('on');$('#p1').classList.add('on');$('#foot').classList.remove('hide');paint();scrollTo(0,0)};
+boot();
+</script></body></html>

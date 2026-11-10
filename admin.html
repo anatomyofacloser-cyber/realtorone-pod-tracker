@@ -1,0 +1,154 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RealtorOne · Pod Tracker Admin</title><meta name="robots" content="noindex,nofollow">
+<style>
+@font-face{font-family:I;src:url(fonts/Inter.ttf);font-weight:100 900;font-display:swap}
+*{margin:0;box-sizing:border-box}body{font-family:I,system-ui,sans-serif;background:#0b0b0d;color:#eee;min-height:100vh}
+a{color:#F5C242}.gold{color:#F5C242}.muted{color:#808489;font-size:12.5px}.hide{display:none!important}
+.login{max-width:360px;margin:12vh auto;background:#151517;border:1px solid rgba(245,194,66,.4);border-radius:20px;padding:28px}
+.br{font-size:11px;font-weight:800;letter-spacing:3px;color:#F5C242}h1{font-size:24px;margin:8px 0 18px}
+label{display:block;font-size:12.5px;color:#bbb;margin:12px 0 6px}
+input,select,textarea{width:100%;background:#222225;border:0;outline:1px solid #333;border-radius:10px;padding:11px 12px;font:15px I;color:#fff}input:focus,textarea:focus{outline-color:#F5C242}
+.btn{display:inline-block;border:0;cursor:pointer;border-radius:12px;padding:12px 16px;font:800 14px I;background:linear-gradient(135deg,#F8D56B,#C98A12);color:#111;text-decoration:none;white-space:nowrap}
+.btn.w{width:100%;margin-top:18px}.btn.sm{padding:7px 11px;font-size:12px;border-radius:9px}.btn.dk{background:#1c1c1e;color:#F5C242;box-shadow:inset 0 0 0 1px #F5C242}
+.msg{font-size:12.5px;color:#ff8a80;margin-top:10px;min-height:16px}
+.top{display:flex;align-items:center;gap:10px;padding:14px 22px;border-bottom:1px solid #222;position:sticky;top:0;background:#0b0b0dee;backdrop-filter:blur(6px);z-index:5;flex-wrap:wrap}
+.top h2{font-size:17px;flex:1;min-width:200px}
+main{padding:18px 22px 40px;max-width:1300px;margin:0 auto}
+.demo{background:#2a1d0a;color:#F5C242;border:1px solid #5a4214;border-radius:12px;padding:10px 14px;font-size:13px;margin-bottom:14px;font-weight:600}
+#tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}#tabs .tb{background:#1a1a1d;color:#ccc;border:1px solid #333;border-radius:999px;padding:7px 14px;cursor:pointer;font:600 13px I;display:flex;gap:7px;align-items:center}#tabs .tb.on{background:#F5C242;color:#111;border-color:#F5C242}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;background:#e5534b}.dot.g{background:#4cd07d}
+.alert{background:rgba(229,83,75,.1);border:1px solid rgba(229,83,75,.45);color:#ffb3ad;border-radius:12px;padding:10px 14px;font-size:13px;margin-bottom:14px}.alert.ok{background:rgba(76,208,125,.08);border-color:rgba(76,208,125,.4);color:#a8ecc0}
+.hero{display:flex;gap:16px;flex-wrap:wrap;align-items:center;background:linear-gradient(135deg,#1a160c,#151517 60%);border:1px solid rgba(245,194,66,.35);border-radius:18px;padding:16px 18px}
+.hero .nm{font-size:21px;font-weight:800}.hero .sb{font-size:12.5px;color:#9aa0a6;margin-top:3px}.pill{font-size:12px;font-weight:800;padding:6px 11px;border-radius:999px}.pill.g{background:rgba(76,208,125,.15);color:#4cd07d}.pill.r{background:rgba(229,83,75,.15);color:#ff8a80}.pill.s{background:#2a2a2c;color:#ccc}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
+.k{background:#151517;border:1px solid #2a2a2c;border-radius:16px;padding:14px}.k b{display:block;font-size:26px;color:#F5C242;margin-top:5px}.k span{font-size:11px;color:#9aa0a6;letter-spacing:.5px;text-transform:uppercase;font-weight:700}.k small{display:block;font-size:11.5px;color:#888;margin-top:3px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:12px;margin-top:12px}
+.p{background:#151517;border:1px solid #2a2a2c;border-radius:16px;padding:16px;overflow:auto}.p h3{font-size:12.5px;letter-spacing:1px;color:#F5C242;text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.chk{display:grid;grid-template-columns:1fr 1fr;gap:12px}.chk h4{font-size:13px;margin-bottom:8px;color:#ddd}
+.it{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:10px;margin:5px 0;font-size:13px;font-weight:600}
+.it.g{background:rgba(76,208,125,.12);color:#8be3a9}.it.r{background:rgba(229,83,75,.12);color:#ff9d96}.it.n{background:#1f1f22;color:#777}.it em{font-style:normal;font-weight:800}
+.hb{display:grid;grid-template-columns:minmax(110px,1.2fr) 3fr 78px;gap:10px;align-items:center;font-size:12.5px;margin:9px 0}.hb .t{background:#2a2a2c;border-radius:6px;height:10px;overflow:hidden}.hb i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#F8D56B,#C98A12)}.hb i.ok{background:#4cd07d}.hb em{font-style:normal;text-align:right;color:#ccc;font-weight:700}
+.big{height:16px;background:#2a2a2c;border-radius:9px;overflow:hidden;margin:8px 0 4px;position:relative}.big i{display:block;height:100%;background:linear-gradient(90deg,#F8D56B,#C98A12)}.big i.tm{background:#5b6573}.big s{position:absolute;top:-3px;bottom:-3px;width:2px;background:#fff;opacity:.7}
+.fn{display:flex;flex-direction:column;gap:6px}.fs{display:flex;align-items:center;gap:10px;font-size:13px}.fs .fb{height:28px;border-radius:7px;background:linear-gradient(90deg,#F8D56B,#C98A12);display:flex;align-items:center;padding:0 10px;color:#111;font-weight:800;min-width:34px}.fs span{width:150px;color:#ccc}.fs small{color:#888}
+.wk{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:6px}.wd{border-radius:10px;padding:8px 4px;text-align:center;font-size:11px;background:#1f1f22;color:#888}.wd b{display:block;font-size:15px;margin-top:2px}.wd.g{background:rgba(76,208,125,.14);color:#8be3a9}.wd.a{background:rgba(245,194,66,.13);color:#F5C242}.wd.r{background:rgba(229,83,75,.13);color:#ff9d96}
+table{width:100%;border-collapse:collapse;font-size:12.5px}th{text-align:left;color:#9aa0a6;font-weight:700;padding:8px;border-bottom:1px solid #2a2a2c;white-space:nowrap;position:sticky;top:0;background:#151517}td{padding:8px;border-bottom:1px solid #1f1f22;vertical-align:top}
+td.y{color:#4cd07d;font-weight:800}td.x{color:#ff8a80;font-weight:800}.tbl{max-height:520px;overflow:auto}
+.note{border-left:3px solid #F5C242;background:#1c1c1e;border-radius:0 10px 10px 0;padding:9px 12px;margin:8px 0;font-size:13px;line-height:1.45}.note.sup{border-color:#e5534b;background:rgba(229,83,75,.08)}.note small{display:block;color:#9aa0a6;margin-bottom:3px;font-size:11.5px}
+textarea#fb{min-height:290px;font:13.5px/1.5 I;resize:vertical;background:#0f1a12;outline-color:#24452f}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.modal{position:fixed;inset:0;background:#000b;display:grid;place-items:center;z-index:20;padding:16px}.modal .box{background:#151517;border:1px solid rgba(245,194,66,.4);border-radius:18px;padding:22px;width:100%;max-width:420px}
+@media(max-width:600px){main{padding:12px}.top{padding:12px}.chk{grid-template-columns:1fr}.hb{grid-template-columns:90px 1fr 70px}.fs span{width:110px}}
+</style></head><body>
+<div class="login" id="login"><div class="br">REALTORONE · POD TRACKER</div><h1>Pod Manager sign in</h1>
+<form id="lf"><label for="u">Username</label><input id="u" autocomplete="username" required><label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password" required>
+<button class="btn w" id="lb">Sign in</button><div class="msg" id="lm"></div></form><div class="muted" style="margin-top:14px">Same login as the Live Lab admin. Data loads from the RealtorOne Google Sheet only after sign-in. <a href="?demo=1">View demo</a></div></div>
+<div id="app" class="hide">
+<div class="top"><h2><span class="gold">RealtorOne</span> · 90-Day Pod Tracker</h2><button class="btn sm dk" id="add">＋ Add realtor</button><button class="btn sm dk" id="rf">↻ Refresh</button><button class="btn sm dk" id="lo">Sign out</button></div>
+<main>
+<div class="demo hide" id="demoB">DEMO MODE · all names and numbers below are made-up sample data, not a real realtor.</div>
+<div class="demo hide" id="testB">TEST VIEW · includes entries sent from a ?test=1 link. <button class="btn sm" id="purge">🧹 Delete all test entries</button></div>
+<div id="tabs"></div>
+<div id="pending"></div>
+<div id="body"></div>
+<div class="muted" style="margin-top:16px" id="gen"></div>
+</main></div>
+<div class="modal hide" id="addM"><div class="box"><div class="br">ADD A REALTOR</div><h1 style="font-size:20px;margin:6px 0 4px">New 90-day tracker</h1>
+<label>Full name</label><input id="aName" placeholder="e.g. Sarah Khan"><label>Link name (letters only, goes in ?r=…)</label><input id="aId" placeholder="sarah">
+<label>Instagram (optional)</label><input id="aIg" placeholder="@handle"><label>Focus (optional)</label><input id="aFocus" placeholder="e.g. Emaar off-plan · Dubai Hills">
+<label>Start date</label><input id="aStart" type="date"><div class="msg" id="aMsg"></div>
+<div class="row"><button class="btn" id="aGo">Add realtor</button><button class="btn dk" id="aX">Cancel</button></div></div></div>
+<script src="core.js"></script>
+<script>
+const C=TrackerCore,$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const QS=new URLSearchParams(location.search),DEMO=QS.get('demo')==='1',SHOWTEST=QS.get('test')==='1';
+let CFG={},DATA=null,SEL=null,WEEK='this',FBREF='y';
+const SITE=()=>(CFG.site||location.href.replace(/admin\.html.*$/,''));
+const linkFor=id=>SITE()+'?r='+id;
+async function api(params){const r=await fetch(CFG.endpoint+'?'+new URLSearchParams(params),{redirect:'follow'});return r.json()}
+async function boot(){try{CFG=await (await fetch('config.json',{cache:'no-store'})).json()}catch(e){}
+  if(DEMO){DATA=demo();show();return}if(sessionStorage.r1tok)load()}
+$('#lf').onsubmit=async ev=>{ev.preventDefault();$('#lb').disabled=true;$('#lm').textContent='';
+  try{const r=await api({action:'login',u:$('#u').value,p:$('#pw').value});
+    if(r.ok){sessionStorage.r1tok=r.token;await load()}else $('#lm').textContent=r.error==='locked'?'Too many attempts. Try again in 15 minutes.':r.error==='not_configured'?'Admin password not set yet (run setAdminPassword in Apps Script).':'Wrong username or password'+(r.attemptsLeft!=null?' ('+r.attemptsLeft+' tries left)':'')+'.'}
+  catch(e){$('#lm').textContent='Could not reach the server.'}$('#lb').disabled=false};
+async function load(){const r=await api(Object.assign({action:'t_data',token:sessionStorage.r1tok},SHOWTEST?{test:'1'}:{})).catch(()=>({ok:false}));
+  if(!r.ok){sessionStorage.removeItem('r1tok');$('#login').classList.remove('hide');$('#app').classList.add('hide');
+    $('#lm').textContent=r.error==='auth'?'Session expired. Please sign in again.':r.service?'Tracker backend not installed yet (add Tracker.gs, see SETUP.md).':'Could not load data.';return}
+  DATA=r;show()}
+function show(){$('#login').classList.add('hide');$('#app').classList.remove('hide');$('#demoB').classList.toggle('hide',!DEMO);$('#testB').classList.toggle('hide',!SHOWTEST||DEMO);
+  const R=DATA.realtors.filter(r=>r.active!==false);if(!SEL||!R.find(r=>r.id===SEL))SEL=R[0]&&R[0].id;render()}
+function statsFor(r){return C.stats(DATA.entries.filter(e=>e.realtor===r.id),{today:DATA.today,start:r.start,days:r.days,goal:r.goal})}
+function render(){
+  const R=DATA.realtors.filter(r=>r.active!==false),S={};R.forEach(r=>S[r.id]=statsFor(r));
+  $('#tabs').innerHTML=R.map(r=>`<button class="tb ${r.id===SEL?'on':''}" data-id="${r.id}"><span class="dot ${S[r.id].submittedToday?'g':''}"></span>${esc(r.name)}</button>`).join('');
+  $$('#tabs .tb').forEach(b=>b.onclick=()=>{SEL=b.dataset.id;render()});
+  const wd=C.isWorkday(DATA.today),miss=R.filter(r=>!S[r.id].submittedToday&&DATA.today>=r.start);
+  $('#pending').innerHTML=!wd?'<div class="alert ok">Sunday: rest day, no check-ins expected.</div>':miss.length?`<div class="alert">⏳ <b>Not submitted yet today (${C.nice(DATA.today)}):</b> ${miss.map(r=>esc(r.name)).join(', ')}</div>`:R.length?'<div class="alert ok">✅ Everyone has checked in today.</div>':'';
+  const r=R.find(x=>x.id===SEL);if(!r){$('#body').innerHTML='<div class="p">No realtors yet. Click “Add realtor”.</div>';return}
+  const s=S[r.id];$('#body').innerHTML=hero(r,s)+kpis(s)+`<div class="grid">${checklist(s)}${feedbackBox(r,s)}</div><div class="grid">${weekly(s)}${programme(s)}</div><div class="grid">${funnel(s)}${notes(s)}</div>`+history(s);
+  $('#fb').value=C.feedback(r.name,s,linkFor(r.id),FBREF==='t'?s.today:s.yesterday);$$('[data-fb]').forEach(b=>b.onclick=()=>{FBREF=b.dataset.fb;render()});
+  $('#cp').onclick=async()=>{try{await navigator.clipboard.writeText($('#fb').value)}catch(e){$('#fb').select();document.execCommand('copy')}$('#cp').textContent='✓ Copied';setTimeout(()=>$('#cp').textContent='📋 Copy feedback',1600)};
+  $('#wa').href='https://wa.me/?text='+encodeURIComponent($('#fb').value);$('#fb').oninput=()=>$('#wa').href='https://wa.me/?text='+encodeURIComponent($('#fb').value);
+  $('#cl').onclick=async()=>{try{await navigator.clipboard.writeText(linkFor(r.id))}catch(e){}$('#cl').textContent='✓ Link copied';setTimeout(()=>$('#cl').textContent='🔗 Copy her link',1600)};
+  $$('[data-wk]').forEach(b=>b.onclick=()=>{WEEK=b.dataset.wk;render()});
+  $('#csv').onclick=()=>csv(r,s);
+  $('#gen').textContent=(DEMO?'Demo data generated ':'Loaded ')+new Date().toLocaleString()+' · “Today” = '+C.nice(DATA.today)+' (Dubai time)';
+}
+function hero(r,s){return `<div class="hero"><div style="flex:1;min-width:220px"><div class="nm">${esc(r.name)}</div><div class="sb">${esc(r.instagram||'')}${r.focus?' · '+esc(r.focus):''}</div><div class="sb">Started ${C.nice(r.start)} · ends ${C.nice(s.end)}</div></div>
+ <span class="pill ${!s.isWorkday?'s':s.submittedToday?'g':'r'}">${!s.isWorkday?'Sunday · rest day':s.submittedToday?'✅ Checked in today':'⏳ Not submitted yet today'}</span>
+ <button class="btn sm dk" id="cl">🔗 Copy her link</button></div>`}
+function kpis(s){const k=(l,v,sm)=>`<div class="k"><span>${l}</span><b>${v}</b>${sm?'<small>'+sm+'</small>':''}</div>`;
+ return `<div class="kpis">${k('Day',s.dayNum+' / '+s.days,Math.round(s.timePct)+'% of programme')}${k('Check-in streak',s.checkinStreak+' 🔥','days in a row (Mon–Sat)')}${k('Full 5/5 streak',s.fullStreak,'best: '+s.bestFullStreak)}${k('Consistency',s.consistency+'%',s.daysSubmitted+' of '+s.workdaysElapsed+' workdays logged')}${k('Commission',`AED ${C.fmt(s.commission)}`,Math.round(s.commissionPct)+'% of AED '+C.fmt(s.goal))}${k('Deals closed',s.all.deals,s.all.eois+' EOIs/bookings')}</div>`}
+function items(e){if(!e)return C.ITEMS.map(i=>`<div class="it n"><span>${i.label}</span><em>no check-in</em></div>`).join('');const d=C.done(e);
+ const v={learn:e.learn?e.learn_min+' min':'No',calls:e.calls+' / 20',followups:e.followups+' / 10',post:e.post?(e.post_link?`<a href="${esc(e.post_link)}" target="_blank" rel="noopener">Yes ↗</a>`:'Yes'):'No',crm:e.crm?'Yes':'No'};
+ return C.ITEMS.map(i=>`<div class="it ${d[i.k]?'g':'r'}"><span>${d[i.k]?'✓':'✗'} ${i.label}</span><em>${v[i.k]}</em></div>`).join('')+`<div class="muted" style="margin-top:6px">Score ${C.score(e)}/5 · leads ${e.leads||0} · meetings ${e.meetings||0} · visits ${e.visits||0}</div>`}
+function checklist(s){return `<div class="p"><h3>Daily checklist <span class="muted">green = done · red = missed</span></h3><div class="chk"><div><h4>Today · ${C.nice(s.today)}</h4>${s.isWorkday?items(s.todayEntry):'<div class="it n"><span>Sunday</span><em>rest day</em></div>'}</div><div><h4>${C.dayName(s.yesterday)} · ${C.nice(s.yesterday)}</h4>${s.yesterday<s.start?'<div class="it n"><span>Before start</span><em>–</em></div>':items(s.yesterdayEntry)}</div></div></div>`}
+function feedbackBox(r,s){return `<div class="p"><h3>💬 Feedback message <span style="display:flex;gap:6px"><button class="btn sm ${FBREF==='y'?'':'dk'}" data-fb="y">${C.dayName(s.yesterday)}</button><button class="btn sm ${FBREF==='t'?'':'dk'}" data-fb="t">Today</button></span></h3><div class="muted" style="margin-bottom:8px">WhatsApp-ready, built from the check-in. Edit before sending.</div><textarea id="fb"></textarea><div class="row"><button class="btn" id="cp">📋 Copy feedback</button><a class="btn dk" id="wa" target="_blank" rel="noopener">Open in WhatsApp</a></div></div>`}
+function bar(l,v,t,unit){const p=Math.min(100,v/t*100);return `<div class="hb"><span>${l}</span><div class="t"><i class="${v>=t?'ok':''}" style="width:${p}%"></i></div><em>${C.fmt(v)}${unit||''} / ${t}</em></div>`}
+function weekly(s){const w=WEEK==='this'?s.week:s.lastWeek,W=C.WEEKLY;
+ const days=WEEK==='this'?`<div class="wk">${s.weekDays.map(d=>{const sc=d.entry?C.score(d.entry):null;const pend=sc===null&&d.date===s.today;return `<div class="wd ${d.future||pend?'':sc===null?(d.date<s.start?'':'r'):sc===5?'g':'a'}">${C.nice(d.date).split(' ')[0]}<b>${d.future?'·':pend?'⏳':sc===null?(d.date<s.start?'–':'✗'):sc+'/5'}</b></div>`}).join('')}</div>`:'';
+ return `<div class="p"><h3>Weekly totals vs targets <span style="display:flex;gap:6px"><button class="btn sm ${WEEK==='this'?'':'dk'}" data-wk="this">This week</button><button class="btn sm ${WEEK==='last'?'':'dk'}" data-wk="last">Last week</button></span></h3>
+ ${bar('Calls',w.calls,W.calls)}${bar('Follow-ups',w.followups,W.followups)}${bar('Posts / Reels',w.posts,W.posts)}${bar('Training',w.learn_min,W.learn_min,'m')}${bar('CRM days',w.crm_days,W.crm_days)}${days}
+ <div class="muted" style="margin-top:8px">Week of ${C.nice(WEEK==='this'?s.weekStart:C.addDays(s.weekStart,-7))} · ${w.days} check-ins · ${w.full_days} full 5/5 days</div></div>`}
+function programme(s){const pace=s.paceTarget,ahead=s.commission>=pace;return `<div class="p"><h3>90-day goal · AED ${C.fmt(s.goal)}</h3>
+ <div style="font-size:30px;font-weight:800;color:#F5C242">AED ${C.fmt(s.commission)}</div><div class="muted">commission earned so far (${s.commissionPct.toFixed(1)}%)</div>
+ <div class="big"><i style="width:${s.commissionPct}%"></i><s style="left:${s.timePct}%"></s></div><div class="muted">White marker = where time is (day ${s.dayNum} of ${s.days}). Straight-line pace today: AED ${C.fmt(pace)} · ${ahead?'<span style="color:#4cd07d">on/above pace</span>':'<span style="color:#ff8a80">AED '+C.fmt(pace-s.commission)+' behind pace</span>'}</div>
+ <div style="margin-top:14px;font-size:13px;color:#ccc">Time elapsed</div><div class="big"><i class="tm" style="width:${s.timePct}%"></i></div><div class="muted">${s.days-s.dayNum} days left · ends ${C.nice(s.end)} · a programme goal, not a guarantee</div></div>`}
+function funnel(s){const a=s.all,st=[['New leads',a.leads],['Meetings booked',a.meetings],['Site / sales-centre visits',a.visits],['EOIs / bookings',a.eois],['Deals closed',a.deals]],mx=Math.max(1,...st.map(x=>x[1]));
+ return `<div class="p"><h3>Funnel · programme to date</h3><div class="fn">${st.map((x,i)=>`<div class="fs"><span>${x[0]}</span><div class="fb" style="width:${Math.max(8,x[1]/mx*100)}%">${x[1]}</div>${i&&st[i-1][1]?`<small>${Math.round(x[1]/st[i-1][1]*100)}%</small>`:''}</div>`).join('')}</div>
+ <div class="muted" style="margin-top:10px">Instagram leads: <b style="color:#F5C242">${a.ig_leads}</b> of ${a.leads} leads · calls ${C.fmt(a.calls)} · follow-ups ${C.fmt(a.followups)} · posts ${a.posts}</div></div>`}
+function notes(s){const n=s.notes.slice(0,6);return `<div class="p"><h3>Challenges &amp; support requests <span class="muted">latest first</span></h3>${n.length?n.map(e=>{let h='';
+ if(e.week_support||e.support)h+=`<div class="note sup"><small>🤝 Support needed · ${C.nice(e.date)}</small>${esc(e.week_support||e.support)}${e.week_support&&e.support?'<br>'+esc(e.support):''}</div>`;
+ if(e.week_challenge||e.challenge)h+=`<div class="note"><small>🧱 ${e.week_challenge?'Weekly challenge':'Challenge'} · ${C.nice(e.date)}</small>${esc(e.week_challenge||e.challenge)}${e.week_challenge&&e.challenge?'<br>'+esc(e.challenge):''}</div>`;
+ if(e.win)h+=`<div class="note" style="border-color:#4cd07d"><small>🏆 Win · ${C.nice(e.date)}</small>${esc(e.win)}</div>`;return h}).join(''):'<div class="muted">Nothing yet. Challenges, wins and support requests from her check-ins appear here.</div>'}</div>`}
+function history(s){const yn=v=>v?'<td class="y">✓</td>':'<td class="x">✗</td>';return `<div class="p" style="margin-top:12px"><h3>Daily history <button class="btn sm" id="csv">⬇ CSV</button></h3><div class="tbl"><table><tr><th>Date</th><th>Score</th><th>Train</th><th>Calls</th><th>F-ups</th><th>Reel</th><th>CRM</th><th>Leads</th><th>IG</th><th>Meet</th><th>Visits</th><th>EOIs</th><th>Deals</th><th>AED</th><th>Win</th><th>Challenge</th><th>Support</th></tr>
+ ${s.history.length?s.history.map(e=>{const d=C.done(e);return `<tr><td style="white-space:nowrap">${C.nice(e.date)}</td><td><b>${C.score(e)}/5</b></td>${d.learn?`<td class="y">${e.learn_min}m</td>`:`<td class="x">${e.learn?e.learn_min+'m':'✗'}</td>`}<td class="${d.calls?'y':'x'}">${e.calls}</td><td class="${d.followups?'y':'x'}">${e.followups}</td>${e.post&&e.post_link?`<td class="y"><a href="${esc(e.post_link)}" target="_blank" rel="noopener">✓↗</a></td>`:yn(e.post)}${yn(e.crm)}<td>${e.leads||0}</td><td>${e.ig_leads||0}</td><td>${e.meetings||0}</td><td>${e.visits||0}</td><td>${e.eois||0}</td><td>${e.deals||0}</td><td>${C.fmt(e.commission)}</td><td>${esc(e.win)}</td><td>${esc(e.week_challenge||e.challenge)}</td><td>${esc(e.week_support||e.support)}</td></tr>`}).join(''):'<tr><td colspan="17" class="muted">No check-ins yet.</td></tr>'}</table></div></div>`}
+function csv(r,s){const H=['date','score','learn','learn_min','calls','followups','post','post_link','crm','leads','ig_leads','meetings','visits','eois','deals','commission','win','challenge','support','week_challenge','week_support'];
+ const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';const t=[H.join(',')].concat(s.history.map(e=>H.map(h=>h==='score'?C.score(e):q(e[h])).join(','))).join('\n');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/csv'}));a.download=r.id+'-tracker.csv';a.click()}
+$('#purge').onclick=async()=>{if(!confirm('Delete every TEST entry from the Sheet? Real check-ins are not touched.'))return;const r=await api({action:'t_purge_test',token:sessionStorage.r1tok}).catch(()=>({ok:false}));alert(r.ok?'Deleted '+r.deleted+' test entries.':'Could not delete test entries.');load()};
+$('#rf').onclick=()=>DEMO?render():load();
+$('#lo').onclick=()=>{if(!DEMO)api({action:'logout',token:sessionStorage.r1tok}).catch(()=>{});sessionStorage.removeItem('r1tok');location.href='admin.html'};
+$('#add').onclick=()=>{$('#aStart').value=DATA.today;$('#aMsg').textContent='';$('#addM').classList.remove('hide')};$('#aX').onclick=()=>$('#addM').classList.add('hide');
+$('#aName').oninput=()=>{if(!$('#aId').dataset.t)$('#aId').value=$('#aName').value.trim().split(/\s+/)[0].toLowerCase().replace(/[^a-z0-9-]/g,'')};$('#aId').oninput=()=>$('#aId').dataset.t=1;
+$('#aGo').onclick=async()=>{if(DEMO){$('#aMsg').textContent='Demo mode: nothing is saved.';return}
+ const r=await api({action:'t_add',token:sessionStorage.r1tok,name:$('#aName').value,id:$('#aId').value,instagram:$('#aIg').value,focus:$('#aFocus').value,start:$('#aStart').value}).catch(()=>({ok:false,error:'network'}));
+ if(!r.ok){$('#aMsg').textContent=r.error;return}SEL=r.id;$('#addM').classList.add('hide');await load();prompt('Added! Send this personal check-in link:',linkFor(r.id))};
+function demo(){const today=(()=>{try{return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Dubai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}catch(e){return new Date().toISOString().slice(0,10)}})();
+ const start=C.addDays(today,-12),E=[];let x=start,i=0;const sample=[
+  [1,20,24,11,1,1,3,2,1,0,0,0,0,'Booked a sales-centre visit for an Azizi Venice investor','Two leads went silent after the payment plan',''],
+  [1,15,21,8,1,1,2,1,0,0,0,0,0,'','Low pick-up rate in the afternoon',''],
+  [1,30,26,12,1,1,4,3,1,1,0,0,0,'Maritime City Reel got 40 DMs','',''],
+  [0,0,14,6,0,1,1,0,0,0,0,0,0,'','Spent the day on a viewing, missed calls','How to handle "the handover is too far"'],
+  [1,15,20,10,1,1,2,1,1,1,1,0,0,'First EOI from an Instagram lead!','',''],
+  [1,20,22,10,1,1,3,2,1,0,0,0,0,'','','',
+   'Leads go cold after the first sales-centre visit','Role-play on closing after the visit'],
+  [1,15,25,13,1,1,5,3,2,1,1,1,18500,'Closed a 1BR in Azizi Riviera 🎉','',''],
+  [1,15,18,9,1,0,1,1,0,0,0,0,0,'','Admin work ate the morning',''],
+  [1,20,23,11,1,1,2,1,1,1,0,0,0,'','',''],
+  [1,15,20,7,0,1,2,0,0,0,0,0,0,'','Ran out of content ideas','Content ideas for Maritime City']];
+ while(x<today){if(C.isWorkday(x)){const s=sample[i%sample.length];if(i!==2){E.push({realtor:'demo-a',date:x,learn:!!s[0],learn_min:s[1],calls:s[2],followups:s[3],post:!!s[4],post_link:s[4]?'https://www.instagram.com/':'',crm:!!s[5],leads:s[6],ig_leads:s[7],meetings:s[8],visits:s[9],eois:s[10],deals:s[11],commission:s[12],win:s[13],challenge:s[14],support:s[15],week_challenge:s[16]||'',week_support:s[17]||''})}i++}x=C.addDays(x,1)}
+ return {ok:true,today:today,realtors:[{id:'demo-a',name:'Sample Realtor A (demo)',instagram:'@sample_demo',focus:'Off-plan · sample data',start:start,days:90,goal:50000},{id:'demo-b',name:'Sample Realtor B (demo)',instagram:'',focus:'Sample data',start:today,days:90,goal:50000}],entries:E}}
+boot();
+</script></body></html>
